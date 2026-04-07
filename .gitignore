@@ -1,0 +1,19 @@
+# Docker volumes
+searxng/
+core-config/
+.env
+
+# OS / Editor
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Backup files
+*.bak
+*.backup
