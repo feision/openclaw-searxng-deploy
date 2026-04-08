@@ -80,6 +80,60 @@ docker compose ps
 
 ---
 
+## ⚠️ 重要：OpenClaw 配置文件结构规范（2026-04-08 更新）
+
+根据最新的 OpenClaw 版本（2026.3.31+），修改 `~/.openclaw/openclaw.json` 时必须遵守以下规则：
+
+### ✅ 正确的配置方式
+
+**方式一：独立工具文件（推荐）** ✅
+
+创建 `~/.openclaw/tools/searxng.js`（如第 6 节所述），无需修改 `openclaw.json`。工具文件自动加载，这是最干净、最可维护的方法。
+
+**方式二：JSON 顶层配置（仅当必须时）**
+
+如果确实需要在配置文件中定义搜索工具或插件，新增字段必须放在 JSON 顶层，与 `channels`、`tools`、`meta`、`models` 同级：
+
+```json
+{
+  "plugins": {
+    "entries": {
+      "searxng": {
+        "config": {
+          "webSearch": {
+            "baseUrl": "http://searxng.zeabur.internal:8080",
+            "categories": "general,news",
+            "language": "zh-CN"
+          }
+        }
+      }
+    }
+  },
+  "tools": {
+    "web": {
+      "search": {
+        "provider": "searxng",
+        "maxResults": 5,
+        "timeoutSeconds": 30,
+        "cacheTtlMinutes": 15
+      }
+    }
+  }
+}
+
+### ❌ 错误的做法（严禁）
+
+- ❌ 在 `tools` 对象内部直接插入 `search` 字段（这已经存在于官方配置中）
+- ❌ 在 `plugins` 对象内部嵌入新字段（除非本就属于该对象）
+- ❌ 覆盖或截断现有字段（如 `channels`、`meta` 等）
+- ❌ 在嵌套对象中插入不属于它的新字段
+
+### 🔧 当前配置状态
+
+你的 `~/.openclaw/openclaw.json` 应该已经包含正确的顶层 `tools.web.search` 和 `plugins.entries.searxng` 配置（见示例）。如果通过方式一（工具文件）集成，这些配置是可选的，工具文件会覆盖或补充配置。
+
+---
+
 ## 4. 核心配置详解（避免常见坑）
 
 ### 4.1 编辑 `core-config/settings.yml`

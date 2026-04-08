@@ -1,6 +1,8 @@
 # 🔍 SearXNG 部署指南
 
-> 私有 SearXNG 实例完整部署与 OpenClaw 集成教程
+> ⚠️ **重要提示**：本文档 v2.0（2026-04-08 更新），严格遵循 OpenClaw 配置文件结构规范。请完整阅读第 3 节关于 `openclaw.json` 的配置规则。
+
+私有 SearXNG 实例完整部署与 OpenClaw 集成教程
 
 ## 📖 这是什么？
 
